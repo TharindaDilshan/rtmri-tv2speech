@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.cache/
+checkpoints/*.pt
+*.wav
+!samples/outputs/*.wav
+.venv/
+sanity_check.py
