@@ -1,0 +1,68 @@
+# Signal geometry. These values are shared by every stage and must not diverge:
+# the synthesizer's frame rate, the vocoder's upsampling product, and WavLM's output
+# rate are all 50 Hz at 16 kHz, which requires hop_length = 320 and
+# prod(upsample_rates) = 320.
+audio:
+  sample_rate: 16000
+  hop_length: 320          # 16000 / 320 = 50 Hz frame rate
+  n_fft: 1024
+  win_length: 1024
+  n_mels: 80
+  f_min: 0
+  f_max: 8000
+  peak_norm_target: 0.95
+  mel_clamp_min: 1.0e-5    # log(mel.clamp(min=...)) floor
+
+# Tract variables. Native rtMRI rate; resampled to the 50 Hz audio frame rate before
+# entering the synthesizer.
+tv:
+  mri_frame_rate: 83
+  columns: [LA, LP, TTCD, TTCL, TBCD, TBCL, TRCD, VEL]
+
+# Source features, extracted with pYIN from the reference recording.
+# NOTE: unvoiced frames keep log_f0 = 0 exactly; the value is not interpolated.
+# The voicing channel stores pYIN's continuous voiced_probability, not a hard flag.
+source:
+  f0_min: 70.0
+  f0_max: 400.0
+
+# Acoustic model: 10-dim per-frame input (8 TVs + log-F0 + voicing) plus an
+# utterance-level speaker embedding supplied as global conditioning.
+synthesizer:
+  n_input: 10
+  spk_emb_dim: 192
+  d_model: 384
+  n_head: 6
+  n_layers: 6
+  dim_ff: 1536
+  dropout: 0.1
+  max_pe_len: 4000
+  postnet_channels: 256
+  postnet_kernel: 5
+  postnet_layers: 5
+  postnet_dropout: 0.5
+  # Training crop length. Also the inference window: absolute positional encoding is
+  # only trained over this range, so longer utterances are decoded in overlapping
+  # windows rather than in one pass.
+  max_seq_frames: 1000
+  window: 1000
+  window_hop: 500
+  window_taper: 100
+
+# Acoustic-to-articulatory inversion: frozen WavLM-Large plus a trainable head.
+inversion:
+  feat_dim: 1024
+  proj_dim: 256
+  lstm_hidden: 384
+  lstm_layers: 2
+  dropout: 0.1
+  n_tv: 8
+
+# HiFi-GAN v1 vocoder. prod(upsample_rates) must equal audio.hop_length.
+vocoder:
+  upsample_rates: [8, 5, 4, 2]
+  upsample_kernels: [16, 10, 8, 4]
+  resblock_kernels: [3, 7, 11]
+  resblock_dilations: [[1, 3, 5], [1, 3, 5], [1, 3, 5]]
+  initial_channels: 512
+  lrelu_slope: 0.1
