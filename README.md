@@ -123,5 +123,13 @@ redistributed here; see their respective sources for access.
 ## Citation
 
 ```bibtex
-@inproceedings{...}
+@misc{piyadasa2026validatingacoustictoarticulatoryinversion,
+      title={Validating Acoustic-to-Articulatory Inversion with Real-Time MRI: From Vocal-Tract Fidelity to Phonetic Consequences}, 
+      author={Tharinda Piyadasa and Michael Proctor and Amelia Gully and Tuende Szalay and Emily Kiff and Kirrie Ballard and Craig Jin},
+      year={2026},
+      eprint={2611.20432},
+      archivePrefix={arXiv},
+      primaryClass={eess.AS},
+      url={https://arxiv.org/abs/2611.20432}, 
+}
 ```
