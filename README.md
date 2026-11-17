@@ -1,6 +1,6 @@
 # rtMRI Tract-Variable Speech Synthesis
 
-Reference implementation for _[paper title]_ ([venue, year]).
+Reference implementation for _Validating Acoustic-to-Articulatory Inversion with Real-Time MRI: From Vocal-Tract Fidelity to Phonetic Consequences_ (2026).
 
 Speech synthesis from vocal tract variables (TVs) measured in real-time MRI. Tract
 variables are extracted from tracked midsagittal articulator contours, an
