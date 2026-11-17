@@ -30,7 +30,7 @@ what the reported numbers mean.
 ## Install
 
 ```bash
-git clone https://github.com/<user>/rtmri-tv2speech.git
+git clone https://github.com/TharindaDilshan/rtmri-tv2speech.git
 cd rtmri-tv2speech
 pip install -r requirements.txt
 ```
